@@ -1,25 +1,37 @@
 import 'package:get/get.dart';
 
-class CountdownController extends GetxController {
-  final int duration; // countdown duration in seconds
-  RxInt remainingTime; // observable for remaining time
+import 'dart:async';
 
-  CountdownController(this.duration) : remainingTime = duration.obs;
+import '../../event/count_down_event.dart';
+import '../../event/event_bus.dart';
+
+class CountdownController extends GetxController {
+  Timer? _timer;
+  int countdownValue = 60;
 
   @override
   void onInit() {
     super.onInit();
-    startCountdown();
+    _startCountdown();
   }
 
-  void startCountdown() {
-    Future.doWhile(() async {
-      await Future.delayed(Duration(seconds: 1));
-      if (remainingTime.value > 0) {
-        remainingTime.value--;
-        return true;
+  void _startCountdown() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      countdownValue--;
+
+      for (int i = 0; i < 1000; i++) {
+        EventBus().publish(CountdownEvent(i, countdownValue));
       }
-      return false;
+
+      if (countdownValue == 0) {
+        timer.cancel();
+      }
     });
+  }
+
+  @override
+  void onClose() {
+    _timer?.cancel();
+    super.onClose();
   }
 }

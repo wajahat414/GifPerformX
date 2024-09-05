@@ -4,3 +4,5 @@ class GifModel {
 
   const GifModel({required this.path, required this.countdown});
 }
+
+//Not Used But If we have to show Addtional Data , along with Gif we use this Model instead of String for uri

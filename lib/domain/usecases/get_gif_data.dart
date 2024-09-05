@@ -1,5 +1,4 @@
 import '../../data/repository/gif_repository.dart';
-import '../models/gif.dart';
 
 class GetGifUris {
   final GifRepository gifRepository;

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 class EventBus {
-  // Singleton pattern for easy access across the app
+  // Implementing Singleton Pattern to ensure Only one Instance Exists
   static final EventBus _instance = EventBus._internal();
 
   factory EventBus() => _instance;
